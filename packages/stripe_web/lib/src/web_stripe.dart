@@ -107,9 +107,7 @@ class WebStripe extends StripePlatform {
   ]) async {
     assert(params != null, 'params are not allowed to be null on the web');
     final billingDetails =
-        (params!.paymentMethodData as PaymentMethodDataCardFromMethod)
-                .billingDetails ??
-            BillingDetails();
+        (params!.paymentMethodData as PaymentMethodData).billingDetails;
     final response =
         await params!.maybeWhen<Future<stripe_js.PaymentIntentResponse>>(
       card: (usage) {
@@ -117,10 +115,13 @@ class WebStripe extends StripePlatform {
           paymentIntentClientSecret,
           data: stripe_js.ConfirmCardPaymentData(
             paymentMethod: stripe_js.CardPaymentMethodDetails(
-                card: element!,
-                billingDetails: stripe_js.BillingDetails.fromJson(
-                  billingDetails.toJson(),
-                )),
+              card: element!,
+              billingDetails: billingDetails != null
+                  ? stripe_js.BillingDetails.fromJson(
+                      billingDetails.toJson(),
+                    )
+                  : null,
+            ),
             receiptEmail: receiptEmail,
             setupFutureUsage: (options?.setupFutureUsage ??
                     PaymentIntentsFutureUsage.OnSession)
