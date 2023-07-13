@@ -47,13 +47,15 @@ abstract class StripePlatform extends PlatformInterface {
 
     /// Paymentmethod options
     PaymentMethodOptions? options,
+    String? receiptEmail,
   );
 
   @Deprecated('This method is deprecated use [isPlatformPaySupported] instead')
   Future<bool> isApplePaySupported() async => false;
 
   /// Configure the payment sheet using [SetupPaymentSheetParameters] as config.
-  Future<PaymentSheetPaymentOption?> initPaymentSheet(SetupPaymentSheetParameters params);
+  Future<PaymentSheetPaymentOption?> initPaymentSheet(
+      SetupPaymentSheetParameters params);
 
   /// Display the payment sheet.
   Future<PaymentSheetPaymentOption?> presentPaymentSheet({

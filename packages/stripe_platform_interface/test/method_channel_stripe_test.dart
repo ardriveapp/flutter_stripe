@@ -154,13 +154,15 @@ void main() {
             ).methodChannel,
           );
           result = await sut.confirmPayment(
-              'secret',
-              const PaymentMethodParams.card(
-                paymentMethodData: PaymentMethodData(),
-              ),
-              const PaymentMethodOptions(
-                setupFutureUsage: PaymentIntentsFutureUsage.OffSession,
-              ));
+            'secret',
+            const PaymentMethodParams.card(
+              paymentMethodData: PaymentMethodData(),
+            ),
+            const PaymentMethodOptions(
+              setupFutureUsage: PaymentIntentsFutureUsage.OffSession,
+            ),
+            null,
+          );
         });
 
         test('It returns payment intent', () {
@@ -188,6 +190,7 @@ void main() {
               const PaymentMethodParams.card(
                 paymentMethodData: PaymentMethodData(),
               ),
+              null,
               null,
             ),
             throwsA(const TypeMatcher<StripeException>()),

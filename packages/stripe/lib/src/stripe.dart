@@ -404,6 +404,7 @@ class Stripe {
     required String paymentIntentClientSecret,
     PaymentMethodParams? data,
     PaymentMethodOptions? options,
+    String? receiptEmail,
   }) async {
     await _awaitForSettings();
     try {
@@ -411,6 +412,7 @@ class Stripe {
         paymentIntentClientSecret,
         data,
         options,
+        receiptEmail,
       );
       return paymentMethod;
     } on StripeError {

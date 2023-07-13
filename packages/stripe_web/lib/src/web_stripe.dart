@@ -103,6 +103,7 @@ class WebStripe extends StripePlatform {
     String paymentIntentClientSecret,
     PaymentMethodParams? params, [
     PaymentMethodOptions? options,
+    String? receiptEmail,
   ]) async {
     assert(params != null, 'params are not allowed to be null on the web');
     final response =
@@ -112,6 +113,7 @@ class WebStripe extends StripePlatform {
           paymentIntentClientSecret,
           data: stripe_js.ConfirmCardPaymentData(
             paymentMethod: stripe_js.CardPaymentMethodDetails(card: element!),
+            receiptEmail: receiptEmail,
             setupFutureUsage: (options?.setupFutureUsage ??
                     PaymentIntentsFutureUsage.OnSession)
                 .toJs(),
@@ -371,7 +373,8 @@ class WebStripe extends StripePlatform {
   }
 
   @override
-  Future<PaymentSheetPaymentOption?> initPaymentSheet(SetupPaymentSheetParameters params) {
+  Future<PaymentSheetPaymentOption?> initPaymentSheet(
+      SetupPaymentSheetParameters params) {
     throw WebUnsupportedError.method('initPaymentSheet');
   }
 
